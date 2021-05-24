@@ -1,0 +1,6 @@
+.loginContainer > img {
+  /*height: 200px;*/
+  height: 130px;
+  content: url("images/logo2.png");
+  text-align: center;
+}
