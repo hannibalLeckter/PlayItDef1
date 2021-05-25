@@ -14,6 +14,7 @@ class Crud extends React.Component {
 
     this.togglePlay = this.togglePlay.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
+    this.handleUpload2 = this.handleUpload2.bind(this);
   };
 
   state = {
@@ -22,16 +23,24 @@ class Crud extends React.Component {
     data: [],
     modalInsertar: false,
     modalEditar: false,
-    uploadValue:0,
+    uploadValue2:0,
     picture:null,
+    song:null,
     play: false,
+    cancionError:"",
+    duracionError:"",
+    autorError:"",
+    generoError:"",
+    portadaError:"",
+    audioError:"",
+
     form: {
       cancion: "",
       duracion: "",
-      audio: "",
       autor: "",
       genero: "",
-      portada:""
+      portada:"",
+      audio:""
     },
     id: 0,
   };
@@ -51,10 +60,13 @@ class Crud extends React.Component {
   };
 
   peticionPost = () => {
+    const isValid=this.validate();
+   if(isValid){
     fire.database().ref().child("canciones").push(this.state.form, (error) => {
       if (error) console.log(error);
     });
     this.setState({ modalInsertar: false });
+  }
   };
 
   peticionPut = () => {
@@ -79,6 +91,7 @@ class Crud extends React.Component {
   };
 
   handleChange = (e) => {
+  
     this.setState({
       form: {
         ...this.state.form,
@@ -86,6 +99,8 @@ class Crud extends React.Component {
       },
     });
     console.log(this.state.form);
+    //clear form
+ 
   };
 
   
@@ -124,6 +139,68 @@ class Crud extends React.Component {
         })
         })
     
+}
+
+handleUpload2(event){
+  const file2 = event.target.files[0];
+  const storageRef2 = fire.storage().ref(`/musica/${file2.name}`);
+  const task2 = storageRef2.put(file2);
+
+  task2.on('state-changed', snapshot =>{
+      let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) *100;
+      this.setState({
+          uploadValue2:percentage
+      })
+  },error=>{
+      console.log(error.message)
+  },()=>{
+      storageRef2.getDownloadURL().then(url1=>{
+          this.setState({
+              uploadValue2:100,
+              song:url1
+          })
+      })
+      })
+  
+}
+
+validate = () =>{
+  let cancionError="";
+  let duracionError="";
+  let autorError="";
+  let generoError="";
+  let portadaError="";
+  let audioError="";
+  if(!this.state.form.cancion){
+    cancionError="Debes introducir el titulo de la cancion";
+  }
+
+  if(!this.state.form.duracion){
+    duracionError="Debes introducir la duracion de la cancion";
+  }
+
+  if(!this.state.form.autor){
+    autorError="Debes introducir el autor de la cancion";
+  }
+
+  if(!this.state.form.genero){
+    generoError="Debes introducir el genero de la cancion";
+  }
+
+  if(!this.state.form.portada){
+    portadaError="Debes introducir la portada de la cancion";
+  }
+
+  if(!this.state.form.audio){
+    audioError="Debes introducir el audio de la cancion";
+  }
+
+  if(cancionError || duracionError || autorError || generoError || portadaError || audioError){
+    this.setState({cancionError,duracionError,autorError,generoError,portadaError,audioError});
+    return false;
+  }
+  return true;
+
 }
 
 togglePlay(url) {
@@ -182,7 +259,7 @@ togglePlay(url) {
 
                   {/* <td className="col-3">{this.state.data[i].audio}</td> */}
                   
-                   {/* <td>
+                   <td>
                   <div class="row justify-content-center">
                     <button
                       className="btn btn-primary w-25"
@@ -202,7 +279,7 @@ togglePlay(url) {
                       Eliminar
                     </button>
                     </div>
-                  </td>  */}
+                  </td> 
                 </tr>
               );
             })}
@@ -217,63 +294,80 @@ togglePlay(url) {
             <div className="form-group">
               <label>Cancion: </label>
               <br />
-              <input
+              <input 
+        
                 type="text"
                 className="form-control"
                 name="cancion"
                 onChange={this.handleChange}
               />
+              <div className="text-danger">{this.state.cancionError}</div>
               <br />
               <label>Duracion: </label>
               <br />
               <input
+                
                 type="text"
                 className="form-control"
                 name="duracion"
                 onChange={this.handleChange}
               />
-              <br />
-              <label>Pista de audio: </label>
-              <br />
-              <input
-                type="text"
-                className="form-control"
-                name="audio"
-                onChange={this.handleChange}
-              />
+              <div className="text-danger">{this.state.duracionError}</div>
               <br />
               <label>Autor: </label>
               <br />
               <input
+                reqired
                 type="text"
                 className="form-control"
                 name="autor"
                 onChange={this.handleChange}
               />
+              <div className="text-danger">{this.state.autorError}</div>
               <br />
               <label>Genero: </label>
               <br />
               <input
+                
                 type="text"
                 className="form-control"
                 name="genero"
                 onChange={this.handleChange}
               />
+              <div className="text-danger">{this.state.generoError}</div>
               <div>
                 <progress value={this.state.uploadValue} max="100"></progress>
                 <br />
-                <input type="file" name="portada" onChange={this.handleUpload}/>
+                <input  type="file" name="portada" onChange={this.handleUpload}/>
                 <br />
                 <img width="320" src={this.state.picture} alt="" />
+                <div className="text-danger">{this.state.portadaError}</div>
             </div>
               
-              <label>Genero: </label>
+              <label>Url imagen: </label>
               <br />
               <input
                 value={this.state.picture}
                 type="text"
                 className="form-control"
                 name="portada"
+                // onBlur={this.handleChange}
+                onMouseMove={this.handleChange}
+              />
+              <div>
+                <progress value={this.state.uploadValue2} max="100"></progress>
+                <br />
+                <input type="file" name="audio" onChange={this.handleUpload2}/>
+                <div className="text-danger">{this.state.audioError}</div>
+            </div>
+              
+              <label>Url cancion: </label>
+              <br />
+              <input
+                value={this.state.song}
+                type="text"
+                className="form-control"
+                name="audio"
                 // onBlur={this.handleChange}
                 onMouseMove={this.handleChange}
               />

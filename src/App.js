@@ -38,7 +38,7 @@ function App() {
         case "auth/user-not-found":
           setEmailError(err.message);
           break;
-        case "auth/wrong-passwrod":
+        case "auth/wrong-password":
           setPasswordError(err.message);
           break;
       }
@@ -57,7 +57,7 @@ function App() {
         case "auth/invalid-email":
           setEmailError(err.message);
           break;
-        case "auth/weak-passwrod":
+        case "auth/weak-password":
           setPasswordError(err.message);
           break;
       }
