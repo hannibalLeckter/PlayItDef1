@@ -3,9 +3,10 @@
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  overflow: hidden;
 }
 
-img{
+img {
   width: 30%;
 }
 
@@ -67,7 +68,6 @@ button {
   box-shadow: 0 50px 70px -20px rgba(0, 0, 0, 0.8);
 }
 
-
 .login .loginContainer-left label {
   color: white;
   margin: 14px 0;
@@ -116,8 +116,6 @@ button {
   font-size: 16px;
 }
 
-
-
 .hero {
   width: 100%;
   min-height: 100vh;
@@ -141,7 +139,6 @@ button {
 .hero nav h2 {
   color: #fff;
   font-size: 20px;
-  
 }
 
 .hero nav button {
@@ -149,6 +146,3 @@ button {
   padding: 8px 0;
   background: #3a2b58;
 }
-
- 
- 
