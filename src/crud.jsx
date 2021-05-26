@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import fire from "./fire";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
-import { FaPlay,FaClock } from "react-icons/fa";
+import { FaPlay,FaTrashAlt,FaEdit } from "react-icons/fa";
 import { BsFillPersonFill } from "react-icons/bs";
 
 class Crud extends React.Component {
@@ -81,7 +81,7 @@ class Crud extends React.Component {
   peticionDelete = () => {
     if (
       window.confirm(
-        `Estás seguro que deseas eliminar el canal ${
+        `Estás seguro que deseas eliminar la cancion ${
           this.state.form && this.state.form.cancion
         }?`
       )
@@ -275,24 +275,17 @@ console.log(CurrentUser);
                   {/* <td className="col-3">{this.state.data[i].audio}</td> */}
                   
                    <td>
-                  <div class="row justify-content-center">
-                    <button
-                      className="btn btn-primary w-25"
-                      onClick={() =>
+                  <div style={{visibility: this.state.showMe ? 'visible' : 'hidden' }} class="row justify-content-center">
+                   
+                    <p><FaEdit onClick={() =>
                         this.seleccionarCanal(this.state.data[i], i, "Editar")
-                      }
-                    >
-                      Editar
-                    </button>{" "}
+                      }/></p>
+                    {" "}
                     {"   "}
-                    <button
-                      className="btn btn-danger w-25"
-                      onClick={() =>
+                    
+                    <p><FaTrashAlt onClick={() =>
                         this.seleccionarCanal(this.state.data[i], i, "Eliminar")
-                      }
-                    >
-                      Eliminar
-                    </button>
+                      }/></p>
                     </div>
                   </td> 
                 </tr>
@@ -408,46 +401,51 @@ console.log(CurrentUser);
         <Modal isOpen={this.state.modalEditar}>
           <ModalHeader>Editar Registro</ModalHeader>
           <ModalBody>
+          
             <div className="form-group">
-              <label>Canal: </label>
+              <label>Cancion: </label>
               <br />
-              <input
-                type="text"
-                className="form-control"
-                name="canal"
-                onChange={this.handleChange}
+              <input 
                 value={this.state.form && this.state.form.cancion}
-              />
-              <br />
-              <label>País: </label>
-              <br />
-              <input
                 type="text"
                 className="form-control"
-                name="pais"
+                name="cancion"
                 onChange={this.handleChange}
-                value={this.state.form && this.state.form.pais}
               />
+              <div className="text-danger">{this.state.cancionError}</div>
               <br />
-              <label>Idioma: </label>
+              <label>Duracion: </label>
               <br />
               <input
+                value={this.state.form && this.state.form.duracion}
                 type="text"
                 className="form-control"
-                name="idioma"
+                name="duracion"
                 onChange={this.handleChange}
-                value={this.state.form && this.state.form.idioma}
               />
+              <div className="text-danger">{this.state.duracionError}</div>
               <br />
-              <label>Cantidad de Suscriptores (millones): </label>
+              <label>Autor: </label>
               <br />
               <input
+                value={this.state.form && this.state.form.autor}
                 type="text"
                 className="form-control"
-                name="suscriptores"
+                name="autor"
                 onChange={this.handleChange}
-                value={this.state.form && this.state.form.suscriptores}
               />
+              <div className="text-danger">{this.state.autorError}</div>
+              <br />
+              <label>Genero: </label>
+              <br />
+              <input
+                value={this.state.form && this.state.form.genero}
+                type="text"
+                className="form-control"
+                name="genero"
+                onChange={this.handleChange}
+              />
+              
             </div>
           </ModalBody>
           <ModalFooter>
