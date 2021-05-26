@@ -2,6 +2,7 @@
  import fire from './fire';
  import Music from './Music';
  import Crud from './crud';
+ import Side from './Sidebar';
 
  const Hero = (props) =>{
 
@@ -29,7 +30,7 @@ console.log(res2);
                  <h2>Bienvenido {res2}</h2>
                  <button onClick={props.handleLogout}>Cerrar Sesion</button>
              </nav>
-
+             {/*<Side/>*/}
              <Music/>
              <Crud/> 
              
