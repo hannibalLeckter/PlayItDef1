@@ -15,6 +15,8 @@ class Crud extends React.Component {
     this.togglePlay = this.togglePlay.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
     this.handleUpload2 = this.handleUpload2.bind(this);
+
+    
   };
 
   state = {
@@ -33,7 +35,7 @@ class Crud extends React.Component {
     generoError:"",
     portadaError:"",
     audioError:"",
-
+    showMe:true,
     form: {
       cancion: "",
       duracion: "",
@@ -212,16 +214,29 @@ togglePlay(url) {
   this.audio.play();
  }
 
+ showHide(){
+  const CurrentUser = fire.auth().currentUser.email;
+  
+console.log(CurrentUser);
+
+  if(CurrentUser=="admin@gmail.com"){
+    console.log("yes");
+     this.setState({showMe:true});
+  }else{
+    console.log("no");
+    this.setState({showMe:false});
+  }
+    
+ }
 
   render() {
 
-  
-    
     return (
-      <div className="App">
+      <div className="App" onLoad={()=>this.showHide()}>
         <br />
         <div className="col text-center" >
-        <button 
+          <button 
+          style={{visibility: this.state.showMe ? 'visible' : 'hidden' }}
           className="btn btn-success w-25 center"
           onClick={() => this.setState({ modalInsertar: true })}
         >
