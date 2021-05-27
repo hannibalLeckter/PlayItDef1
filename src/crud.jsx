@@ -1,10 +1,11 @@
-import React, { Component } from "react";
+import React, { Component , useState } from "react";
 
 import fire from "./fire";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
 import { FaPlay,FaTrashAlt,FaEdit } from "react-icons/fa";
 import { BsFillPersonFill } from "react-icons/bs";
+import './formSearch.css';
 
 class Crud extends React.Component {
   
@@ -36,6 +37,7 @@ class Crud extends React.Component {
     portadaError:"",
     audioError:"",
     showMe:true,
+    searchTerm:"",
     form: {
       cancion: "",
       duracion: "",
@@ -52,13 +54,20 @@ class Crud extends React.Component {
   
 
   peticionGet = () => {
-    fire.database().ref().child("canciones").on("value", (cancion) => {
-      if (cancion.val() !== null) {
-        this.setState({ ...this.state.data, data: cancion.val() });
-      } else {
-        this.setState({ data: [] });
-      }
-    });
+    // fire.database().ref().child("canciones").on("value", (cancion) => {
+    //   if (cancion.val() !== null) {
+    //     this.setState({ ...this.state.data, data: cancion.val() });
+    //   } else {
+    //     this.setState({ data: [] });
+    //   }
+    // });
+    fire.database().ref().child("canciones").on("value", snapshot=>{
+      let songList = [];
+      snapshot.forEach(snap=>{
+        songList.push(snap.val());
+      });
+      this.setState({data:songList});
+    })
   };
 
   peticionPost = () => {
@@ -71,26 +80,26 @@ class Crud extends React.Component {
   }
   };
 
-  peticionPut = () => {
-    fire.database().ref().child(`canciones/${this.state.id}`).set(this.state.form, (error) => {
-      if (error) console.log(error);
-    });
-    this.setState({ modalEditar: false });
-  };
+  // peticionPut = () => {
+  //   fire.database().ref().child(`canciones/${this.state.id}`).set(this.state.form, (error) => {
+  //     if (error) console.log(error);
+  //   });
+  //   this.setState({ modalEditar: false });
+  // };
 
-  peticionDelete = () => {
-    if (
-      window.confirm(
-        `Estás seguro que deseas eliminar la cancion ${
-          this.state.form && this.state.form.cancion
-        }?`
-      )
-    ) {
-        fire.database().ref().child(`canciones/${this.state.id}`).remove((error) => {
-        if (error) console.log(error);
-      });
-    }
-  };
+  // peticionDelete = () => {
+  //   if (
+  //     window.confirm(
+  //       `Estás seguro que deseas eliminar la cancion ${
+  //         this.state.form && this.state.form.cancion
+  //       }?`
+  //     )
+  //   ) {
+  //       fire.database().ref().child(`canciones/${this.state.id}`).remove((error) => {
+  //       if (error) console.log(error);
+  //     });
+  //   }
+  // };
 
   handleChange = (e) => {
   
@@ -230,10 +239,19 @@ console.log(CurrentUser);
  }
 
   render() {
-
+    const {data,searchTerm} = this.state
+    const filteredSongs = data.filter(song =>{
+      song.cancion.toLowerCase().includes(searchTerm.toLowerCase())
+    })
     return (
       <div className="App" onLoad={()=>this.showHide()}>
         <br />
+        <div class="form__group field">
+  <input class="form__field"  name="name" id='name' required type="text"  placeholder="Search..." onChange={event => this.setState({searchTerm:event.target.value})}/>
+  <label for="name" class="form__label">Search...</label>
+</div>
+        {/* <input type="text"  placeholder="Search..." onChange={event => this.setState({searchTerm:event.target.value})}/> */}
+
         <div className="col text-center" >
           <button 
           style={{visibility: this.state.showMe ? 'visible' : 'hidden' }}
@@ -256,7 +274,9 @@ console.log(CurrentUser);
             <th className="col-3">Genero</th>
             <th className="col-3">Duracion</th>
           </tr>
-            {Object.keys(this.state.data).map((i) => {
+             {/* {
+             
+             Object.keys(this.state.data).map((i) => {
               // console.log(i);
               return (
                 <tr key={i}>
@@ -272,7 +292,7 @@ console.log(CurrentUser);
                   <td className="col-3">{this.state.data[i].genero}</td>
                   <td className="col-3">{this.state.data[i].duracion}</td>
 
-                  {/* <td className="col-3">{this.state.data[i].audio}</td> */}
+                  
                   
                    <td>
                   <div style={{visibility: this.state.showMe ? 'visible' : 'hidden' }} class="row justify-content-center">
@@ -290,7 +310,47 @@ console.log(CurrentUser);
                   </td> 
                 </tr>
               );
-            })}
+            })}  */}
+            {data.filter((val)=>{
+              if(searchTerm==""){
+                return val;
+              }else if(val.cancion.toLowerCase().includes(searchTerm.toLowerCase())){
+                return val;
+              }
+            }).map((data,key) =>{
+  return(
+    <tr key={key}>
+                  <td className="col-1 ">
+                      <p><FaPlay onClick={() =>
+                        this.togglePlay(data.audio)
+                      }/></p>
+                    
+                  </td>
+                  <td className="col-3"><img src={data.portada}></img></td>
+                  <td className="col-3 ">{data.cancion}<br></br>
+                  <p>{data.autor}</p></td>
+                  <td className="col-3">{data.genero}</td>
+                  <td className="col-3">{data.duracion}</td>
+
+                   <td>
+                  
+                  {/* <div style={{visibility: this.state.showMe ? 'visible' : 'hidden' }} class="row justify-content-center">
+                   
+                    <p><FaEdit onClick={() =>
+                        this.seleccionarCanal(data, data.uid, "Editar")
+                      }/></p>
+                    {" "}
+                    {"   "}
+                    
+                    <p><FaTrashAlt onClick={() =>
+                        this.seleccionarCanal(data, data.uid, "Eliminar")
+                      }/></p>
+                    </div> */}
+                  
+                  </td> 
+                </tr>
+  );
+})}
           </tbody>
         </table>
 
