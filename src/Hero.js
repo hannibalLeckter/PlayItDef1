@@ -30,9 +30,11 @@ console.log(res2);
                  <h2>Bienvenido {res2}</h2>
                  <button onClick={props.handleLogout}>Cerrar Sesion</button>
              </nav>
-             {/*<Side/>*/}
+              <Side/> 
              <Music/>
-             <Crud/> 
+            
+             <Crud/>
+             
              
          </section>
 

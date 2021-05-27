@@ -12,9 +12,9 @@ function Sidebar() {
         className="sidebar__logo"
         alt=""
       />
-      <HomeIcon option="Home" /><br></br>
-      <SearchIcon option="Search" /><br></br>
-      <LibraryMusicIcon option="Your Library"/><br></br>
+      <HomeIcon option="Home" className="footer__icon" /><br></br>
+      <SearchIcon option="Search" className="footer__icon"/><br></br>
+      <LibraryMusicIcon option="Your Library" className="footer__icon"/><br></br>
       <br />
       <strong className="sidebar__title">PLAYLISTS</strong>
       <hr />

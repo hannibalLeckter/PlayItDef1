@@ -5,7 +5,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
 import { FaPlay,FaTrashAlt,FaEdit } from "react-icons/fa";
 import { BsFillPersonFill } from "react-icons/bs";
+import HomeIcon from "@material-ui/icons/Home";
+import SearchIcon from "@material-ui/icons/Search";
+import LibraryMusicIcon from "@material-ui/icons/LibraryMusic";
 import './formSearch.css';
+import "./Sidebar.css";
 
 class Crud extends React.Component {
   
@@ -244,12 +248,16 @@ console.log(CurrentUser);
       song.cancion.toLowerCase().includes(searchTerm.toLowerCase())
     })
     return (
+      
+      
       <div className="App" onLoad={()=>this.showHide()}>
         <br />
+            
         <div class="form__group field">
-  <input class="form__field"  name="name" id='name' required type="text"  placeholder="Search..." onChange={event => this.setState({searchTerm:event.target.value})}/>
-  <label for="name" class="form__label">Search...</label>
-</div>
+          <input class="form__field"  name="name" id='name' required type="text"  autoComplete="off" placeholder="Buscar..." onChange={event => this.setState({searchTerm:event.target.value})}/>
+          <label for="name" class="form__label">Buscar...</label>
+        </div>
+
         {/* <input type="text"  placeholder="Search..." onChange={event => this.setState({searchTerm:event.target.value})}/> */}
 
         <div className="col text-center" >

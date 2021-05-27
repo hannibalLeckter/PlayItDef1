@@ -4,10 +4,12 @@
   flex: 0.2;
   padding-left: 10px;
   padding-right: 10px;
-  height: 100vh;
+  height: 100%;
   color: white;
   background-color: #040404;
   width: 250px;
+  max-width: 250px;
+  position: absolute;
 }
 .sidebar > img {
   content: url(images/logo2.png);
@@ -25,4 +27,10 @@
   margin-right: auto;
   object-fit: contain;
   padding: 10px;
+}
+
+.footer__icon:hover,
+.footer__green:hover {
+  transition: transform 0.2s ease-in-out;
+  transform: scale(1.2) !important;
 }
