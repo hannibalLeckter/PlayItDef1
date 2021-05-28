@@ -3,6 +3,7 @@
  import Music from './Music';
  import Crud from './crud';
  import Side from './Sidebar';
+ import "./hero.css";
 
  const Hero = (props) =>{
 
@@ -25,7 +26,7 @@ console.log(res2);
 
      return(
          <section className="hero">
-             <nav>
+             <nav className="nav">
                  
                  <h2>Bienvenido {res2}</h2>
                  <button onClick={props.handleLogout}>Cerrar Sesion</button>

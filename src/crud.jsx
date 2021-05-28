@@ -244,18 +244,16 @@ console.log(CurrentUser);
 
   render() {
     const {data,searchTerm} = this.state
-    const filteredSongs = data.filter(song =>{
-      song.cancion.toLowerCase().includes(searchTerm.toLowerCase())
-    })
+    
     return (
       
       
-      <div className="App" onLoad={()=>this.showHide()}>
+      <div className="App crud" onLoad={()=>this.showHide()}>
         <br />
             
         <div class="form__group field">
           <input class="form__field"  name="name" id='name' required type="text"  autoComplete="off" placeholder="Buscar..." onChange={event => this.setState({searchTerm:event.target.value})}/>
-          <label for="name" class="form__label">Buscar...</label>
+          <label for="name" class="form__label">Buscar canciones...</label>
         </div>
 
         {/* <input type="text"  placeholder="Search..." onChange={event => this.setState({searchTerm:event.target.value})}/> */}
