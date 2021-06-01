@@ -8,8 +8,11 @@ import { BsFillPersonFill } from "react-icons/bs";
 import HomeIcon from "@material-ui/icons/Home";
 import SearchIcon from "@material-ui/icons/Search";
 import LibraryMusicIcon from "@material-ui/icons/LibraryMusic";
+import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
+import PauseCircleOutlineIcon from "@material-ui/icons/PauseCircleOutline";
 import './formSearch.css';
 import "./Sidebar.css";
+import "./Footer.css";
 
 class Crud extends React.Component {
   
@@ -20,8 +23,10 @@ class Crud extends React.Component {
     this.togglePlay = this.togglePlay.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
     this.handleUpload2 = this.handleUpload2.bind(this);
+    this.audio = new Audio();
+    this.estado = false;
+    this.oldurl = "";
 
-    
   };
 
   state = {
@@ -218,14 +223,44 @@ validate = () =>{
 
 }
 
-togglePlay(url) {
-  console.log(url)
-  this.audio = new Audio(url);
-  this.setState({ play: !this.state.play });
-  console.log(this.audio);
-  // this.state.play ? this.audio.play() : this.audio.pause();
-  this.audio.play();
- }
+ togglePlay(url) {
+   if(this.estado){
+     this.estado=false;
+   }
+   else{
+     this.estado=true;
+   }
+  if(this.oldurl==""){
+    this.oldurl=url;
+    this.audio.src=this.oldurl;
+    if(this.audio.paused){
+      this.audio.play();
+    }
+    else{
+      this.audio.pause();
+    }
+   }
+  else{
+     if(this.oldurl==url){
+        if(this.audio.paused){
+          this.audio.play();
+        }
+        else{
+          this.audio.pause();
+        }
+     }
+     else{
+        this.audio.src=url;
+        this.oldurl=url;
+        if(this.audio.paused){
+          this.audio.play();
+        }
+        else{
+          this.audio.pause();
+        }
+     }
+   }
+}
 
  showHide(){
   const CurrentUser = fire.auth().currentUser.email;
@@ -327,9 +362,23 @@ console.log(CurrentUser);
   return(
     <tr key={key}>
                   <td className="col-1 ">
-                      <p><FaPlay onClick={() =>
-                        this.togglePlay(data.audio)
-                      }/></p>
+                      {this.estado ? (
+                        <PauseCircleOutlineIcon
+                        onClick={() =>
+                          this.togglePlay(data.audio)
+                        }
+                        fontSize="large"
+                        className="footer__icon"
+                      />
+                        ) : (
+                        <PlayCircleOutlineIcon
+                        onClick={() =>
+                          this.togglePlay(data.audio)
+                        }
+                        fontSize="large"
+                        className="footer__icon"
+                      />
+                        )}
                     
                   </td>
                   <td className="col-3"><img src={data.portada}></img></td>
