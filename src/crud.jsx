@@ -8,8 +8,20 @@ import { BsFillPersonFill } from "react-icons/bs";
 import HomeIcon from "@material-ui/icons/Home";
 import SearchIcon from "@material-ui/icons/Search";
 import LibraryMusicIcon from "@material-ui/icons/LibraryMusic";
+import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
+import PauseCircleOutlineIcon from "@material-ui/icons/PauseCircleOutline";
 import './formSearch.css';
 import "./Sidebar.css";
+import "./Footer.css";
+import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
+import SkipNextIcon from "@material-ui/icons/SkipNext";
+import ShuffleIcon from "@material-ui/icons/Shuffle";
+import RepeatIcon from "@material-ui/icons/Repeat";
+import VolumeDownIcon from "@material-ui/icons/VolumeDown";
+import PlaylistPlayIcon from "@material-ui/icons/PlaylistPlay";
+import "./Footer.css";
+import { Grid, Slide, Slider } from "@material-ui/core";
+import { VolumeDown, VolumeMute, VolumeUp } from "@material-ui/icons";
 
 class Crud extends React.Component {
   
@@ -18,10 +30,15 @@ class Crud extends React.Component {
     super();
 
     this.togglePlay = this.togglePlay.bind(this);
+    this.muteMusic = this.muteMusic.bind(this);
+    this.upMusic = this.upMusic.bind(this);
+    this.downMusic = this.downMusic.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
     this.handleUpload2 = this.handleUpload2.bind(this);
+    this.audio = new Audio();
+    this.estado = false;
+    this.oldurl = "";
 
-    
   };
 
   state = {
@@ -218,14 +235,80 @@ validate = () =>{
 
 }
 
-togglePlay(url) {
-  console.log(url)
-  this.audio = new Audio(url);
-  this.setState({ play: !this.state.play });
-  console.log(this.audio);
-  // this.state.play ? this.audio.play() : this.audio.pause();
-  this.audio.play();
- }
+muteMusic() {
+    if(this.oldurl==""){
+      alert("No song selected")
+    }
+
+    if(this.audio.volume!=0.0){
+      this.audio.volume=0.0;
+    }
+    else{
+      this.audio.volume=1.0;
+    }
+    console.log(this.audio.volume)
+}
+
+downMusic() {
+    if(this.audio.volume==5.551115123125783e-17){
+        console.log("No se puede bajar mas el volumen.")
+    }
+    else if (this.audio.volume>0){
+        this.audio.volume=this.audio.volume-0.2;
+    }
+    console.log(this.audio.volume);
+}
+upMusic() {
+    if(this.audio.volume==1){
+        console.log("No se puede subir mas el volumen.")
+    }
+    else if (this.audio.volume<1){
+        this.audio.volume=this.audio.volume+0.2;
+    }
+    console.log("Subiendo volumen...",this.audio.volume);
+}
+
+ togglePlay(url) {
+   console.log("asdasdasdas"+this.audio.volume)
+   if(this.estado){
+     this.estado=false;
+   }
+   else{
+     this.estado=true;
+   }
+  if(this.oldurl==""){
+    this.oldurl=url;
+    this.audio.src=this.oldurl;
+    if(this.audio.paused){
+      this.audio.play();
+    }
+    else{
+      this.audio.pause();
+    }
+   }
+  else{
+     if(this.oldurl==url){
+        if(this.audio.paused){
+          this.audio.play();
+        }
+        else{
+          this.audio.pause();
+        }
+     }
+     else{
+        this.audio.src=url;
+        this.oldurl=url;
+        if(this.audio.paused){
+          this.audio.play();
+        }
+        else{
+          this.audio.pause();
+        }
+     }
+   }
+}
+
+
 
  showHide(){
   const CurrentUser = fire.auth().currentUser.email;
@@ -250,6 +333,27 @@ console.log(CurrentUser);
       
       <div className="App crud" onLoad={()=>this.showHide()}>
         <br />
+        {/* <div className="footer">
+      <div className="footer__right">
+        <Grid container spacing={2}>
+          <Grid item>
+            <PlaylistPlayIcon />
+          </Grid>
+          <Grid item>
+            <VolumeDownIcon className="footer__icon" onClick={this.downMusic}/>
+          </Grid>
+          <Grid item>
+            <VolumeUp className="footer__icon" onClick={this.upMusic}/>
+          </Grid>
+          <Grid item>
+            <VolumeMute className="footer__icon" onClick={this.muteMusic}/>
+          </Grid>
+          <Grid item xs>
+            <Slider aria-labelledby="continuous-slider" max={1} min={0} defaultValue={this.audio.volume} value={this.audio.volume}/>
+          </Grid>
+        </Grid>
+      </div>
+    </div> */}
             
         <div class="form__group field">
           <input class="form__field"  name="name" id='name' required type="text"  autoComplete="off" placeholder="Buscar..." onChange={event => this.setState({searchTerm:event.target.value})}/>
@@ -327,9 +431,23 @@ console.log(CurrentUser);
   return(
     <tr key={key}>
                   <td className="col-1 ">
-                      <p><FaPlay onClick={() =>
-                        this.togglePlay(data.audio)
-                      }/></p>
+                      {this.estado ? (
+                        <PauseCircleOutlineIcon
+                        onClick={() =>
+                          this.togglePlay(data.audio)
+                        }
+                        fontSize="large"
+                        className="footer__icon"
+                      />
+                        ) : (
+                        <PlayCircleOutlineIcon
+                        onClick={() =>
+                          this.togglePlay(data.audio)
+                        }
+                        fontSize="large"
+                        className="footer__icon"
+                      />
+                        )}
                     
                   </td>
                   <td className="col-3"><img src={data.portada}></img></td>
@@ -360,7 +478,7 @@ console.log(CurrentUser);
           </tbody>
         </table>
 
-
+        
 
         <Modal isOpen={this.state.modalInsertar}>
           <ModalHeader>Insertar Registro</ModalHeader>
@@ -531,6 +649,7 @@ console.log(CurrentUser);
           </ModalFooter>
         </Modal>
       </div>
+      
     );
   }
 }

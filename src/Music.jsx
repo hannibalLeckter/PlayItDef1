@@ -1,11 +1,11 @@
 import React, { Component } from "react"
 import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
+import PauseCircleOutlineIcon from "@material-ui/icons/PauseCircleOutline";
 import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
 import ShuffleIcon from "@material-ui/icons/Shuffle";
 import RepeatIcon from "@material-ui/icons/Repeat";
 import VolumeDownIcon from "@material-ui/icons/VolumeDown";
-import PauseCircleOutlineIcon from "@material-ui/icons/PauseCircleOutline";
 import PlaylistPlayIcon from "@material-ui/icons/PlaylistPlay";
 import "./Footer.css";
 import { Grid, Slide, Slider } from "@material-ui/core";
@@ -25,6 +25,8 @@ this.togglePlay = this.togglePlay.bind(this);
 this.downMusic = this.downMusic.bind(this);
 this.upMusic = this.upMusic.bind(this);
 this.muteMusic = this.muteMusic.bind(this);
+
+this.sound = document.querySelectorAll('audio');
 }
 
 togglePlay() {
@@ -55,14 +57,19 @@ upMusic() {
     console.log("Subiendo volumen...",this.audio.volume);
 }
 muteMusic() {
-    if(this.audio.volume!=0){
+  let audios = [...document.getElementsByTagName('audio')];
+  audios.forEach(audio => audio.volume = 0.5) // lower volume 50%.
+
+    console.log(this.sound);
+    if(this.sound.volume!=0){
         console.log("Quitando volumen...");
-        this.audio.volume=0.0;
+        //this.audio.volume=0.0;
+        this.sound.volume=0.0;
         this.setState({ play: !this.state.play });
     }
     else{
         console.log("Poniendo volumen...");
-        this.audio.volume=1;
+        this.sound.volume=1;
         this.setState({ play: !this.state.play });
     }
 }
