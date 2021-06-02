@@ -310,20 +310,20 @@ upMusic() {
 
 
 
- showHide(){
-  const CurrentUser = fire.auth().currentUser.email;
+//  showHide(){
+//   const CurrentUser = fire.auth().currentUser.email;
   
-console.log(CurrentUser);
+// console.log(CurrentUser);
 
-  if(CurrentUser=="admin@gmail.com"){
-    console.log("yes");
-     this.setState({showMe:true});
-  }else{
-    console.log("no");
-    this.setState({showMe:false});
-  }
+//   if(CurrentUser=="admin@gmail.com"){
+//     console.log("yes");
+//      this.setState({showMe:true});
+//   }else{
+//     console.log("no");
+//     this.setState({showMe:false});
+//   }
     
- }
+//  }
 
   render() {
     const {data,searchTerm} = this.state
@@ -331,7 +331,7 @@ console.log(CurrentUser);
     return (
       
       
-      <div className="App crud" onLoad={()=>this.showHide()}>
+      <div className="App crud" >
         <br />
         {/* <div className="footer">
       <div className="footer__right">
