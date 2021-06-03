@@ -132,12 +132,11 @@ button {
   padding: 20px 40px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   position: fixed;
   top: 0;
   height: 104px;
   z-index: 1000;
-  flex-wrap:nowrap;
 }
 
 .hero nav h2 {
@@ -156,14 +155,13 @@ button {
 .container {
   align-items: center;
   display: flex;
-  flex-direction:row-reverse;
-  justify-content:flex-start;
+  flex-direction: row-reverse;
+  justify-content:end;
   text-align: center;
   padding:  40px 40px;
+  margin-bottom: 40px;
   width: fit-content;
   height: 100px;
-  flex-wrap:nowrap;
-  width: 100%;
   
 
  

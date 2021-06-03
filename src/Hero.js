@@ -23,7 +23,6 @@ import {
 } from "react-router-dom";
 import Admin from "./admin";
 import User from "./user";
-import { colors } from "@material-ui/core";
 
 const Hero = (props) => {
   const mystyle = {
@@ -73,15 +72,34 @@ const Hero = (props) => {
     <Router>
       <section className="hero" onLoad={showHide}>
         <nav className="nav">
-          
-          <div><h2>Bienvenido {res2}</h2></div>
-          
+          <h2>Bienvenido {res2}</h2>
 
-          
+          {/* <Dropdown  isOpen={dropdown} toggle={abrirCerrarDropdown} style={{ position: 'relative', zIndex: '100' }} direction="left" >
+                     <DropdownToggle >
+                     <FaUserAlt/>
+                     </DropdownToggle>
 
-          
+                     <DropdownMenu >
+                     <DropdownItem header style={mystyle}>Opciones</DropdownItem>
+                     <DropdownItem divider style={mystyle}></DropdownItem>
+                        <DropdownItem style={{visibility: showMe ? 'visible' : 'hidden' }}><NavLink exact activeClassName="active" to="/admin">Admin</NavLink></DropdownItem>
+                        <DropdownItem style={mystyle}><NavLink exact activeClassName="active" to="/user">User</NavLink></DropdownItem>
+                         <DropdownItem style={mystyle}><FaUserAlt/> Ver perfil</DropdownItem>
+                         <DropdownItem style={mystyle} onClick={props.handleLogout}><ImExit/> Cerrar Sesion</DropdownItem>
+                     </DropdownMenu>
+                 </Dropdown> */}
 
           <div class="container">
+
+          <a
+              onClick={props.handleLogout}
+              class="btn1 effect01"
+              target="_blank"
+            >
+              <span>
+                <ImExit style={{width:"30px", height:"30px"}}/>
+              </span>
+            </a>
 
             <a
               
@@ -91,16 +109,6 @@ const Hero = (props) => {
             <FaHome style={{width:"30px", height:"30px"}}/>
           </span></NavLink>
               
-            </a>
-
-            <a
-              onClick={props.handleLogout}
-              class="btn1 effect01"
-              target="_blank"
-            >
-              <span>
-                <ImExit style={{width:"30px", height:"30px"}}/>
-              </span>
             </a>
 
             <a 
