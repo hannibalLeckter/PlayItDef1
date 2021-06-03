@@ -3,7 +3,7 @@ import fire from "./fire";
 import Music from "./Music";
 import Crud from "./crud";
 import Side from "./Sidebar";
-import { FaPlay, FaTrashAlt, FaEdit, FaUserAlt, FaLock } from "react-icons/fa";
+import { FaPlay, FaTrashAlt, FaEdit, FaUserAlt, FaLock,FaHome } from "react-icons/fa";
 import { MdSettings } from "react-icons/md";
 import { ImExit } from "react-icons/im";
 import "./hero.css";
@@ -23,6 +23,7 @@ import {
 } from "react-router-dom";
 import Admin from "./admin";
 import User from "./user";
+import Prueba from "./prueba";
 
 const Hero = (props) => {
   const mystyle = {
@@ -72,7 +73,9 @@ const Hero = (props) => {
     <Router>
       <section className="hero" onLoad={showHide}>
         <nav className="nav">
-          <h2>Bienvenido {res2}</h2>
+          <h2>Bienvenido <b>{res2}</b></h2>
+
+          <h1 className="prueba">hola</h1>
 
           {/* <Dropdown  isOpen={dropdown} toggle={abrirCerrarDropdown} style={{ position: 'relative', zIndex: '100' }} direction="left" >
                      <DropdownToggle >
@@ -89,39 +92,52 @@ const Hero = (props) => {
                      </DropdownMenu>
                  </Dropdown> */}
 
-          <div class="container">
+          <div className="containerdor">
+          <a
+              onClick={props.handleLogout}
+              class="btn1 effect01"
+              target="_blank"
+            ><NavLink exact activeClassName="active" to="/user" style={{color:"white"}}>
+              <span>
+                <ImExit style={{width:"30px", height:"30px"}}/>
+              </span></NavLink>
+            </a>
+
             <a
-              href="https://twitter.com/masuwa1018"
               class="btn1 effect01"
               target="_blank"
             >
               <span>
-                <FaLock />
+                <FaUserAlt style={{width:"35px", height:"35px"}}/>
               </span>
             </a>
+
             <a
-              href="https://twitter.com/masuwa1018"
               class="btn1 effect01"
               target="_blank"
-            >
-              <span>
-                <FaUserAlt />
-              </span>
+            ><NavLink exact activeClassName="active" to="/user" style={{color:"white"}}><span>
+            <FaHome style={{width:"35px", height:"35px"}}/>
+          </span></NavLink>
+              
             </a>
-            <a
-              href="https://twitter.com/masuwa1018"
+
+
+            <a 
+              style={{visibility: showMe ? 'visible' : 'hidden' }}
               class="btn1 effect01"
               target="_blank"
-            >
-              <span>
-                <ImExit />
-              </span>
+            ><NavLink exact activeClassName="active" to="/admin" style={{color:"white"}}><span>
+            <FaLock style={{width:"35px", height:"35px"}} />
+          </span></NavLink>
+              
             </a>
+
           </div>
         
         </nav>
-        <User/>
+        
         <Switch>
+          <Route exact path="/" component={Prueba}></Route>
           <Route exact path="/user" component={User}></Route>
           <Route exact path="/admin" component={Admin}></Route>
         </Switch>
