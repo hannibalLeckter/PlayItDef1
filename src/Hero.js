@@ -3,7 +3,7 @@ import fire from "./fire";
 import Music from "./Music";
 import Crud from "./crud";
 import Side from "./Sidebar";
-import { FaPlay, FaTrashAlt, FaEdit, FaUserAlt, FaLock } from "react-icons/fa";
+import { FaPlay, FaTrashAlt, FaEdit, FaUserAlt, FaLock,FaHome } from "react-icons/fa";
 import { MdSettings } from "react-icons/md";
 import { ImExit } from "react-icons/im";
 import "./hero.css";
@@ -90,39 +90,54 @@ const Hero = (props) => {
                  </Dropdown> */}
 
           <div class="container">
+
+          <a
+              onClick={props.handleLogout}
+              class="btn1 effect01"
+              target="_blank"
+            >
+              <span>
+                <ImExit style={{width:"30px", height:"30px"}}/>
+              </span>
+            </a>
+
+            <a
+              
+              class="btn1 effect01"
+              target="_blank"
+            ><NavLink exact activeClassName="active" to="/user"><span>
+            <FaHome style={{width:"30px", height:"30px"}}/>
+          </span></NavLink>
+              
+            </a>
+
+            <a 
+              style={{visibility: showMe ? 'visible' : 'hidden' }}
+              class="btn1 effect01"
+              target="_blank"
+            ><NavLink exact activeClassName="active" to="/admin"><span>
+            <FaLock style={{width:"30px", height:"30px"}} />
+          </span></NavLink>
+              
+            </a>
+
+
             <a
               href="https://twitter.com/masuwa1018"
               class="btn1 effect01"
               target="_blank"
             >
               <span>
-                <FaLock />
+                <FaUserAlt style={{width:"30px", height:"30px"}}/>
               </span>
             </a>
-            <a
-              href="https://twitter.com/masuwa1018"
-              class="btn1 effect01"
-              target="_blank"
-            >
-              <span>
-                <FaUserAlt />
-              </span>
-            </a>
-            <a
-              href="https://twitter.com/masuwa1018"
-              class="btn1 effect01"
-              target="_blank"
-            >
-              <span>
-                <ImExit />
-              </span>
-            </a>
+            
           </div>
         
         </nav>
         <User/>
         <Switch>
-          <Route exact path="/user" component={User}></Route>
+          <Route exact path="/" component={Hero}></Route>
           <Route exact path="/admin" component={Admin}></Route>
         </Switch>
 
