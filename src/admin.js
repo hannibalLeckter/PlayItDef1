@@ -82,7 +82,7 @@ console.log(res2);
             
         </section> */}
         
-<h1>admin</h1>
+
             <Side/> 
             <Music/>
             <Crud/>

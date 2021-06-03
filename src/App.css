@@ -133,16 +133,11 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  position: fixed;
-  top: 0;
-  height: 104px;
-  z-index: 1000;
 }
 
 .hero nav h2 {
   color: #fff;
   font-size: 20px;
-  
 }
 
 .hero nav button {
@@ -158,11 +153,9 @@ button {
   flex-direction: row-reverse;
   justify-content:end;
   text-align: center;
-  padding:  40px 40px;
-  margin-bottom: 40px;
+  padding:  40px 0px;
   width: fit-content;
   height: 100px;
-  
 
  
 }
@@ -195,13 +188,10 @@ p {
   text-decoration: none;
   text-transform: uppercase;
   width: 75%;
-  border-radius:200px;
+  border-radius:180px;
   margin-left: 10px;
 }
-
-
-
-.btn1:hover {
+.btn:hover {
   text-decoration: none;
 }
 
@@ -225,12 +215,10 @@ p {
 .effect01 span {
   transition: all 0.2s ease-out;
   z-index: 2;
-  
 }
 .effect01:hover span{
   letter-spacing: 0.13em;
   color: #333;
-  
 }
 
 /*highlight*/
@@ -260,9 +248,4 @@ p {
 
 
 
-
-
-
-
-/* hola */
 
