@@ -53,6 +53,9 @@ class Crud extends React.Component {
     song:null,
     play: false,
     prueba:false,
+    nombreSong:"",
+    nombreArtist:"",
+    nombrePortada:"",
     volumen:1,
     cancionError:"",
     duracionError:"",
@@ -280,7 +283,11 @@ addCola(song){
   alert("Se ha añadido "+song+" a la cola.");
 }
 
- togglePlay(url) {
+ togglePlay(url,nombre,artista, portada) {
+  this.setState({nombreSong:nombre});
+  this.setState({nombreArtist:artista});
+  this.setState({nombrePortada:portada});
+
   if(this.oldurl==""){
     this.oldurl=url;
     this.audio.src=this.oldurl;
@@ -345,6 +352,23 @@ addCola(song){
       <div className="App crud" >
         <br />
         <div className="footer">
+          <div className="footer__left">
+          <img
+            className="footer__albumLogo"
+            src={this.state.nombrePortada}
+          />
+          {this.state.prueba ? (
+          <div className="footer__songInfo">
+              <h4>{this.state.nombreSong}</h4>
+              <p>{this.state.nombreArtist}</p>
+            </div>
+          ) : (
+          <div className="footer__songInfo">
+              <h4>Ninguna canción seleccionada</h4>
+              <p>...</p>
+            </div>
+          )}
+        </div>
       <div className="footer__right">
         <Grid container spacing={2}>
           <Grid item>
@@ -453,7 +477,7 @@ addCola(song){
                       {this.state.prueba ? (
                         <PauseCircleOutlineIcon
                         onClick={() =>
-                          this.togglePlay(data.audio)
+                          this.togglePlay(data.audio, data.cancion, data.autor, data.portada)
                         }
                         fontSize="large"
                         className="footer__icon"
@@ -461,7 +485,7 @@ addCola(song){
                         ) : (
                         <PlayCircleOutlineIcon
                         onClick={() =>
-                          this.togglePlay(data.audio)
+                          this.togglePlay(data.audio, data.cancion, data.autor)
                         }
                         fontSize="large"
                         className="footer__icon"
