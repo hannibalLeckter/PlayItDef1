@@ -36,21 +36,24 @@ class Crud extends React.Component {
     this.handleUpload = this.handleUpload.bind(this);
     this.handleUpload2 = this.handleUpload2.bind(this);
     this.audio = new Audio();
-    this.estado = false;
     this.oldurl = "";
-
+    
   };
 
   state = {
     uploadValue:0,
     picture:null,
     data: [],
+    cola: "",
     modalInsertar: false,
+    modalCola:false,
     modalEditar: false,
     uploadValue2:0,
     picture:null,
     song:null,
     play: false,
+    prueba:false,
+    volumen:1,
     cancionError:"",
     duracionError:"",
     autorError:"",
@@ -242,9 +245,11 @@ muteMusic() {
 
     if(this.audio.volume!=0.0){
       this.audio.volume=0.0;
+      this.setState({ volumen: 0 });
     }
     else{
       this.audio.volume=1.0;
+      this.setState({ volumen: 1 });
     }
     console.log(this.audio.volume)
 }
@@ -255,6 +260,7 @@ downMusic() {
     }
     else if (this.audio.volume>0){
         this.audio.volume=this.audio.volume-0.2;
+        this.setState({ volumen: this.state.volumen-0.2 });
     }
     console.log(this.audio.volume);
 }
@@ -264,35 +270,38 @@ upMusic() {
     }
     else if (this.audio.volume<1){
         this.audio.volume=this.audio.volume+0.2;
+        this.setState({ volumen: this.state.volumen+0.2 });
     }
     console.log("Subiendo volumen...",this.audio.volume);
 }
 
+addCola(song){
+  this.setState({cola: this.state.cola+song+", "})
+  alert("Se ha añadido "+song+" a la cola.");
+}
+
  togglePlay(url) {
-   console.log("asdasdasdas"+this.audio.volume)
-   if(this.estado){
-     this.estado=false;
-   }
-   else{
-     this.estado=true;
-   }
   if(this.oldurl==""){
     this.oldurl=url;
     this.audio.src=this.oldurl;
     if(this.audio.paused){
       this.audio.play();
+      this.setState({ prueba: this.state.prueba=true });
     }
     else{
       this.audio.pause();
+       this.setState({ prueba: this.state.prueba=false });
     }
    }
   else{
      if(this.oldurl==url){
         if(this.audio.paused){
           this.audio.play();
+           this.setState({ prueba: this.state.prueba=true });
         }
         else{
           this.audio.pause();
+           this.setState({ prueba: this.state.prueba=false });
         }
      }
      else{
@@ -300,9 +309,11 @@ upMusic() {
         this.oldurl=url;
         if(this.audio.paused){
           this.audio.play();
+           this.setState({ prueba: this.state.prueba=true });
         }
         else{
           this.audio.pause();
+           this.setState({ prueba: this.state.prueba=false });
         }
      }
    }
@@ -333,7 +344,7 @@ upMusic() {
       
       <div className="App crud" >
         <br />
-        {/* <div className="footer">
+        <div className="footer">
       <div className="footer__right">
         <Grid container spacing={2}>
           <Grid item>
@@ -349,11 +360,11 @@ upMusic() {
             <VolumeMute className="footer__icon" onClick={this.muteMusic}/>
           </Grid>
           <Grid item xs>
-            <Slider aria-labelledby="continuous-slider" max={1} min={0} defaultValue={this.audio.volume} value={this.audio.volume}/>
+            <Slider aria-labelledby="continuous-slider" max={1} min={0} defaultValue={this.state.volumen} value={this.state.volumen}/>
           </Grid>
         </Grid>
       </div>
-    </div> */}
+    </div>
             
         <div class="form__group field">
           <input class="form__field"  name="name" id='name' required type="text"  autoComplete="off" placeholder="Buscar..." onChange={event => this.setState({searchTerm:event.target.value})}/>
@@ -369,6 +380,14 @@ upMusic() {
           onClick={() => this.setState({ modalInsertar: true })}
         >
           Insertar
+        </button>
+        
+        <button 
+          style={{visibility: this.state.showMe ? 'visible' : 'hidden' }}
+          className="btn btn-success w-25 center"
+          onClick={() => this.setState({ modalCola: true })}
+        >
+          Ver Cola
         </button>
         </div>
         <br />
@@ -431,7 +450,7 @@ upMusic() {
   return(
     <tr key={key}>
                   <td className="col-1 ">
-                      {this.estado ? (
+                      {this.state.prueba ? (
                         <PauseCircleOutlineIcon
                         onClick={() =>
                           this.togglePlay(data.audio)
@@ -455,6 +474,15 @@ upMusic() {
                   <p>{data.autor}</p></td>
                   <td className="col-3">{data.genero}</td>
                   <td className="col-3">{data.duracion}</td>
+                  <td className="col-1 ">
+                        <PlaylistPlayIcon
+                        onClick={() =>
+                          this.addCola(data.cancion)
+                        }
+                        fontSize="large"
+                        className="footer__icon"
+                      />
+                  </td>
 
                    <td>
                   
@@ -576,6 +604,23 @@ upMusic() {
             <button
               className="btn btn-danger"
               onClick={() => this.setState({ modalInsertar: false })}
+            >
+              Cancelar
+            </button>
+          </ModalFooter>
+        </Modal>
+
+        <Modal isOpen={this.state.modalCola}>
+          <ModalHeader>Cola de canciones</ModalHeader>
+          <ModalBody>
+            <div className="form-group">
+              {this.state.cola}
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <button
+              className="btn btn-danger"
+              onClick={() => this.setState({ modalCola: false })}
             >
               Cancelar
             </button>

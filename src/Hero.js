@@ -120,13 +120,16 @@ const Hero = (props) => {
           </div>
         
         </nav>
-
+        <User/>
         <Switch>
           <Route exact path="/user" component={User}></Route>
           <Route exact path="/admin" component={Admin}></Route>
         </Switch>
+
+         
       </section>
     </Router>
+
   );
 };
 

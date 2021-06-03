@@ -85,7 +85,7 @@ console.log(res2);
 
 
             <Side/> 
-            <Music/>
+            {/* <Music/> */}
             <Crud/>
 
         </Router>
