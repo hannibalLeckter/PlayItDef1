@@ -135,7 +135,6 @@ button {
   justify-content: space-around;
   flex-wrap: nowrap;
   position: fixed;
-  z-index: 100;
 }
 
 .hero nav h2 {

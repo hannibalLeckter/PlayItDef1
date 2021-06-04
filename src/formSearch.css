@@ -9,7 +9,6 @@
   margin-left: auto;
   margin-right: auto;
   margin-top: 110px;
-  z-index: 1;
 }
 
 .form__field {
@@ -24,7 +23,6 @@
   background: transparent;
   transition: border-color 0.2s;
   text-align: center;
- 
 }
 .form__field::placeholder {
   color: transparent;
