@@ -94,7 +94,7 @@ function App() {
 
 
   return (
-  
+    
     <div className="App">
       
       {user ? (<Hero handleLogout={handleLogout} />):(<Login 
@@ -114,7 +114,6 @@ function App() {
 
         
     </div>
-    
   );
 }
 

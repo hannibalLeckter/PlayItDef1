@@ -253,5 +253,9 @@ p {
 }
 
 
-
-
+.carrosel{
+  margin-left: 300px;
+  display: flex;
+  justify-content: center;
+  
+}

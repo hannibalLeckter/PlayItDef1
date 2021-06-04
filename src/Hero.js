@@ -9,11 +9,11 @@ import { ImExit } from "react-icons/im";
 import "./hero.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-} from "reactstrap";
+  Carousel,
+  
+} from 'reactstrap';
+
+
 import {
   BrowserRouter as Router,
   Route,
@@ -26,20 +26,13 @@ import User from "./user";
 import App from "./App";
 import Login from "./Login";
 import Prueba from "./prueba";
+import Sidebar from "./Sidebar";
+
 
 const Hero = (props) => {
-  const mystyle = {
-    padding: "10px",
-    fontFamily: "Arial",
-    width: "100%",
-  };
 
   const [showMe, setShowMe] = useState(true);
-  const [dropdown, setDropdown] = useState(false);
-  const abrirCerrarDropdown = () => {
-    setDropdown(!dropdown);
-  };
-
+ 
 
   const CurrentUser = fire.auth().currentUser;
 
@@ -59,6 +52,7 @@ const Hero = (props) => {
   CurrentUser.updateProfile({ displayName: res2 });
 
   const showHide = () => {
+    
     const CurrentUser = fire.auth().currentUser.email;
 
     console.log(CurrentUser);
@@ -72,21 +66,23 @@ const Hero = (props) => {
     }
   };
 
+
+  var Component = showMe  ? Admin : User;
+
   return (
     <Router>
       <section className="hero" onLoad={showHide}>
         <nav className="nav">
           <h2>Bienvenido <b>{res2}</b></h2>
 
-          <h1 className="prueba">hola</h1>
-
 
           <div className="containerdor">
+
           <a
               onClick={props.handleLogout}
               class="btn1 effect01"
               target="_blank"
-            ><NavLink exact activeClassName="active" to="/user" style={{color:"white"}}>
+            ><NavLink exact activeClassName="active" to="/" style={{color:"white"}}>
               <span>
                 <ImExit style={{width:"30px", height:"30px"}}/>
               </span></NavLink>
@@ -101,38 +97,25 @@ const Hero = (props) => {
               </span>
             </a>
 
-            <a
-              class="btn1 effect01"
-              target="_blank"
-            ><NavLink exact activeClassName="active" to="/user" style={{color:"white"}}><span>
-            <FaHome style={{width:"35px", height:"35px"}}/>
-          </span></NavLink>
-              
-            </a>
+            
 
-
-            <a 
-              style={{visibility: showMe ? 'visible' : 'hidden' }}
-              class="btn1 effect01"
-              target="_blank"
-            ><NavLink exact activeClassName="active" to="/admin" style={{color:"white"}}><span>
-            <FaLock style={{width:"35px", height:"35px"}} />
-          </span></NavLink>
-              
-            </a>
 
           </div>
         
         </nav>
-        <h1>Bienvenido a playit</h1>
-        <Switch>
-          <Route exact path="/user" component={User}></Route>
-          <Route exact path="/admin" component={Admin}></Route>
-        </Switch>
+
+        
+        <Sidebar/>
+        {/* <Carousel/> */}
+        <Component/>
+        
 
          
       </section>
     </Router>
+
+
+    
 
   );
 };

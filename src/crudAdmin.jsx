@@ -76,10 +76,7 @@ class CrudAdmin extends React.Component {
     id: 0,
   };
 
-
-
   
-
   peticionGet = () => {
     fire.database().ref().child("canciones").on("value", (cancion) => {
       if (cancion.val() !== null) {
