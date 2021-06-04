@@ -24,6 +24,8 @@ import {
 import Admin from "./admin";
 import User from "./user";
 import App from "./App";
+import Login from "./Login";
+import Prueba from "./prueba";
 
 const Hero = (props) => {
   const mystyle = {
@@ -37,6 +39,7 @@ const Hero = (props) => {
   const abrirCerrarDropdown = () => {
     setDropdown(!dropdown);
   };
+
 
   const CurrentUser = fire.auth().currentUser;
 
@@ -121,9 +124,8 @@ const Hero = (props) => {
           </div>
         
         </nav>
-        
+        <h1>Bienvenido a playit</h1>
         <Switch>
-          <Route exact path="/" component={App}></Route>
           <Route exact path="/user" component={User}></Route>
           <Route exact path="/admin" component={Admin}></Route>
         </Switch>

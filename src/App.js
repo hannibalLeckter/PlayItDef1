@@ -4,6 +4,13 @@ import React, {useState, useEffect} from "react";
 import fire from './fire';
 import Login from './Login';
 import Hero from './Hero';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  NavLink,
+  Switch,
+} from "react-router-dom";
 
 
 function App() {
@@ -87,6 +94,7 @@ function App() {
 
 
   return (
+  
     <div className="App">
       
       {user ? (<Hero handleLogout={handleLogout} />):(<Login 
@@ -106,6 +114,7 @@ function App() {
 
         
     </div>
+    
   );
 }
 
