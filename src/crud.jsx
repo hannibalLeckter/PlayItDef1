@@ -353,10 +353,17 @@ addCola(song){
         <br />
         <div className="footer">
           <div className="footer__left">
+          {this.state.nombrePortada!="" ? (
           <img
             className="footer__albumLogo"
             src={this.state.nombrePortada}
           />
+          ) : (
+            <img
+            className="footer__albumLogo"
+            src="https://firebasestorage.googleapis.com/v0/b/playit-db.appspot.com/o/fotos%2Falbum.jpg?alt=media&token=3daa07fa-eabc-4a20-82f6-aed5ec999f98"
+          />
+          )}
           {this.state.prueba ? (
           <div className="footer__songInfo">
               <h4>{this.state.nombreSong}</h4>
@@ -364,8 +371,8 @@ addCola(song){
             </div>
           ) : (
           <div className="footer__songInfo">
-              <h4>Ninguna canción seleccionada</h4>
-              <p>...</p>
+              <h4>PlayIt!</h4>
+              <p>Reproduce una canción</p>
             </div>
           )}
         </div>
