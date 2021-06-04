@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import fire from './fire';
 import Music from './Music';
 import Crud from './crud';
+import CrudAdmin from './crudAdmin';
 import Side from './Sidebar';
 import { FaPlay,FaTrashAlt,FaEdit,FaUserAlt,FaLock } from "react-icons/fa";
 import { MdSettings } from "react-icons/md";
@@ -85,7 +86,7 @@ console.log(res2);
 
             <Side/> 
             <Music/>
-            <Crud/>
+            <CrudAdmin/>
 
         </Router>
 

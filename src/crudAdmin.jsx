@@ -23,7 +23,7 @@ import "./Footer.css";
 import { Grid, Slide, Slider } from "@material-ui/core";
 import { VolumeDown, VolumeMute, VolumeUp } from "@material-ui/icons";
 
-class Crud extends React.Component {
+class CrudAdmin extends React.Component {
   
 
   constructor(){
@@ -81,20 +81,13 @@ class Crud extends React.Component {
   
 
   peticionGet = () => {
-    // fire.database().ref().child("canciones").on("value", (cancion) => {
-    //   if (cancion.val() !== null) {
-    //     this.setState({ ...this.state.data, data: cancion.val() });
-    //   } else {
-    //     this.setState({ data: [] });
-    //   }
-    // });
-    fire.database().ref().child("canciones").on("value", snapshot=>{
-      let songList = [];
-      snapshot.forEach(snap=>{
-        songList.push(snap.val());
-      });
-      this.setState({data:songList});
-    })
+    fire.database().ref().child("canciones").on("value", (cancion) => {
+      if (cancion.val() !== null) {
+        this.setState({ ...this.state.data, data: cancion.val() });
+      } else {
+        this.setState({ data: [] });
+      }
+    });
   };
 
   peticionPost = () => {
@@ -107,26 +100,26 @@ class Crud extends React.Component {
   }
   };
 
-  // peticionPut = () => {
-  //   fire.database().ref().child(`canciones/${this.state.id}`).set(this.state.form, (error) => {
-  //     if (error) console.log(error);
-  //   });
-  //   this.setState({ modalEditar: false });
-  // };
+  peticionPut = () => {
+    fire.database().ref().child(`canciones/${this.state.id}`).set(this.state.form, (error) => {
+      if (error) console.log(error);
+    });
+    this.setState({ modalEditar: false });
+  };
 
-  // peticionDelete = () => {
-  //   if (
-  //     window.confirm(
-  //       `Estás seguro que deseas eliminar la cancion ${
-  //         this.state.form && this.state.form.cancion
-  //       }?`
-  //     )
-  //   ) {
-  //       fire.database().ref().child(`canciones/${this.state.id}`).remove((error) => {
-  //       if (error) console.log(error);
-  //     });
-  //   }
-  // };
+  peticionDelete = () => {
+    if (
+      window.confirm(
+        `Estás seguro que deseas eliminar el canal ${
+          this.state.form && this.state.form.cancion
+        }?`
+      )
+    ) {
+        fire.database().ref().child(`canciones/${this.state.id}`).remove((error) => {
+        if (error) console.log(error);
+      });
+    }
+  };
 
   handleChange = (e) => {
   
@@ -137,7 +130,6 @@ class Crud extends React.Component {
       },
     });
     console.log(this.state.form);
-    //clear form
  
   };
 
@@ -279,55 +271,53 @@ upMusic() {
 }
 
 addCola(song){
-  this.setState({cola: this.state.cola+song+", "})
-  alert("Se ha añadido "+song+" a la cola.");
-}
-
- togglePlay(url,nombre,artista, portada) {
-  this.setState({nombreSong:nombre});
-  this.setState({nombreArtist:artista});
-  this.setState({nombrePortada:portada});
-
-  if(this.oldurl==""){
-    this.oldurl=url;
-    this.audio.src=this.oldurl;
-    if(this.audio.paused){
-      this.audio.play();
-      this.setState({ prueba: this.state.prueba=true });
-    }
+    this.setState({cola: this.state.cola+song+", "})
+    alert("Se ha añadido "+song+" a la cola.");
+  }
+  
+   togglePlay(url,nombre,artista, portada) {
+    this.setState({nombreSong:nombre});
+    this.setState({nombreArtist:artista});
+    this.setState({nombrePortada:portada});
+  
+    if(this.oldurl==""){
+      this.oldurl=url;
+      this.audio.src=this.oldurl;
+      if(this.audio.paused){
+        this.audio.play();
+        this.setState({ prueba: this.state.prueba=true });
+      }
+      else{
+        this.audio.pause();
+         this.setState({ prueba: this.state.prueba=false });
+      }
+     }
     else{
-      this.audio.pause();
-       this.setState({ prueba: this.state.prueba=false });
-    }
-   }
-  else{
-     if(this.oldurl==url){
-        if(this.audio.paused){
-          this.audio.play();
-           this.setState({ prueba: this.state.prueba=true });
-        }
-        else{
-          this.audio.pause();
-           this.setState({ prueba: this.state.prueba=false });
-        }
+       if(this.oldurl==url){
+          if(this.audio.paused){
+            this.audio.play();
+             this.setState({ prueba: this.state.prueba=true });
+          }
+          else{
+            this.audio.pause();
+             this.setState({ prueba: this.state.prueba=false });
+          }
+       }
+       else{
+          this.audio.src=url;
+          this.oldurl=url;
+          if(this.audio.paused){
+            this.audio.play();
+             this.setState({ prueba: this.state.prueba=true });
+          }
+          else{
+            this.audio.pause();
+             this.setState({ prueba: this.state.prueba=false });
+          }
+       }
      }
-     else{
-        this.audio.src=url;
-        this.oldurl=url;
-        if(this.audio.paused){
-          this.audio.play();
-           this.setState({ prueba: this.state.prueba=true });
-        }
-        else{
-          this.audio.pause();
-           this.setState({ prueba: this.state.prueba=false });
-        }
-     }
-   }
-}
-
-
-
+  }
+  
 
 
   render() {
@@ -375,19 +365,23 @@ addCola(song){
           </Grid>
         </Grid>
       </div>
-    </div>
-            
+    </div>    
+
         <div class="form__group field">
-          <input class="form__field"  name="name" id='name' required type="text"  autoComplete="off" placeholder="Buscar..." onChange={event => this.setState({searchTerm:event.target.value})}/>
-          <label for="name" class="form__label">Buscar canciones...</label>
+          <h1>Menu de administrador</h1>
         </div>
 
         {/* <input type="text"  placeholder="Search..." onChange={event => this.setState({searchTerm:event.target.value})}/> */}
 
         <div className="col text-center" >
+          <button 
+          className="btn btn-success w-25 center"
+          onClick={() => this.setState({ modalInsertar: true })}
+        >
+          Insertar
+        </button>
         
         <button 
-          style={{visibility: this.state.showMe ? 'visible' : 'hidden' }}
           className="btn btn-success w-25 center"
           onClick={() => this.setState({ modalCola: true })}
         >
@@ -406,18 +400,31 @@ addCola(song){
             <th className="col-3">Titulo</th>
             <th className="col-3">Genero</th>
             <th className="col-3">Duracion</th>
-            <th className="col-3">Añadir cola</th>
+            <th className="col-3">Añadir a cola</th>
+            <th className="col-3">Acciones</th>
           </tr>
-             {/* {
-             
-             Object.keys(this.state.data).map((i) => {
+            {Object.keys(this.state.data).map((i) => {
               // console.log(i);
               return (
                 <tr key={i}>
                   <td className="col-1 ">
-                      <p><FaPlay onClick={() =>
-                        this.togglePlay(this.state.data[i].audio)
-                      }/></p>
+                      {this.state.prueba ? (
+                        <PauseCircleOutlineIcon
+                        onClick={() =>
+                          this.togglePlay(this.state.data[i].audio, this.state.data[i].cancion, this.state.data[i].autor, this.state.data[i].portada)
+                        }
+                        fontSize="large"
+                        className="footer__icon"
+                      />
+                        ) : (
+                        <PlayCircleOutlineIcon
+                        onClick={() =>
+                          this.togglePlay(this.state.data[i].audio, this.state.data[i].cancion, this.state.data[i].autor, this.state.data[i].portada)
+                        }
+                        fontSize="large"
+                        className="footer__icon"
+                      />
+                        )}
                     
                   </td>
                   <td className="col-3"><img src={this.state.data[i].portada}></img></td>
@@ -426,88 +433,36 @@ addCola(song){
                   <td className="col-3">{this.state.data[i].genero}</td>
                   <td className="col-3">{this.state.data[i].duracion}</td>
 
+                  <td className="col-3 ">
+                        <PlaylistPlayIcon
+                        onClick={() =>
+                          this.addCola(this.state.data[i].cancion)
+                        }
+                        fontSize="large"
+                        className="footer__icon"
+                      />
+                  </td>
                   
-                  
-                   <td>
-                  <div style={{visibility: this.state.showMe ? 'visible' : 'hidden' }} class="row justify-content-center">
-                   
-                    <p><FaEdit onClick={() =>
+                   <td className="col-3 ">
+                  <div class="actions">
+                    
+                      <FaEdit onClick={() =>
                         this.seleccionarCanal(this.state.data[i], i, "Editar")
-                      }/></p>
+                      }
+                      fontSize="large"/>
                     {" "}
                     {"   "}
                     
-                    <p><FaTrashAlt onClick={() =>
+                      <FaTrashAlt  onClick={() =>
                         this.seleccionarCanal(this.state.data[i], i, "Eliminar")
-                      }/></p>
+                      }
+                      fontSize="large"/>
+                    
                     </div>
                   </td> 
                 </tr>
               );
-            })}  */}
-            {data.filter((val)=>{
-              if(searchTerm==""){
-                return val;
-              }else if(val.cancion.toLowerCase().includes(searchTerm.toLowerCase())){
-                return val;
-              }
-            }).map((data,key) =>{
-  return(
-    <tr key={key}>
-                  <td className="col-1 ">
-                      {this.state.prueba ? (
-                        <PauseCircleOutlineIcon
-                        onClick={() =>
-                          this.togglePlay(data.audio, data.cancion, data.autor, data.portada)
-                        }
-                        fontSize="large"
-                        className="footer__icon"
-                      />
-                        ) : (
-                        <PlayCircleOutlineIcon
-                        onClick={() =>
-                          this.togglePlay(data.audio, data.cancion, data.autor)
-                        }
-                        fontSize="large"
-                        className="footer__icon"
-                      />
-                        )}
-                    
-                  </td>
-                  <td className="col-3"><img src={data.portada}></img></td>
-                  <td className="col-3 ">{data.cancion}<br></br>
-                  <p>{data.autor}</p></td>
-                  <td className="col-3">{data.genero}</td>
-                  <td className="col-3">{data.duracion}</td>
-                  <td className="col-1 ">
-                        <PlaylistPlayIcon
-                        onClick={() =>
-                          this.addCola(data.cancion)
-                        }
-                        fontSize="large"
-                        className="footer__icon"
-                      />
-                  </td>
-
-                   <td>
-                  
-                  {/* <div style={{visibility: this.state.showMe ? 'visible' : 'hidden' }} class="row justify-content-center">
-                   
-                    <p><FaEdit onClick={() =>
-                        this.seleccionarCanal(data, data.uid, "Editar")
-                      }/></p>
-                    {" "}
-                    {"   "}
-                    
-                    <p><FaTrashAlt onClick={() =>
-                        this.seleccionarCanal(data, data.uid, "Eliminar")
-                      }/></p>
-                    </div> */}
-                  
-                  </td> 
-                </tr>
-  );
-})}
+            })}
           </tbody>
         </table>
 
@@ -704,4 +659,4 @@ addCola(song){
   }
 }
 
-export default Crud;
+export default CrudAdmin;

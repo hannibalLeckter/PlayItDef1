@@ -23,7 +23,7 @@ import {
 } from "react-router-dom";
 import Admin from "./admin";
 import User from "./user";
-import Prueba from "./prueba";
+import App from "./App";
 
 const Hero = (props) => {
   const mystyle = {
@@ -137,7 +137,7 @@ const Hero = (props) => {
         </nav>
         
         <Switch>
-          <Route exact path="/" component={Prueba}></Route>
+          <Route exact path="/" component={App}></Route>
           <Route exact path="/user" component={User}></Route>
           <Route exact path="/admin" component={Admin}></Route>
         </Switch>

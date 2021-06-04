@@ -47,45 +47,10 @@ const Prueba = (props) =>{
 
     return(
         <Router>
-        {/* <section className="hero">
-            <nav className="nav">
-                
-       
-
-                <h2>Bienvenido {res2}</h2>
-
-                <Dropdown  isOpen={dropdown} toggle={abrirCerrarDropdown} style={{ position: 'relative', zIndex: '100' }} direction="left" >
-                    <DropdownToggle >
-                    <FaUserAlt/>
-                    </DropdownToggle>
-
-                    <DropdownMenu >
-                    <DropdownItem header style={mystyle}>Opciones</DropdownItem>
-                    <DropdownItem divider style={mystyle}></DropdownItem>
-                       <DropdownItem style={mystyle}><NavLink activeClassName="active" to="/admin">Home</NavLink></DropdownItem>
-                       <DropdownItem style={mystyle}><NavLink exact activeClassName="active" to="/admin">Home</NavLink></DropdownItem>
-                        <DropdownItem style={mystyle}><FaUserAlt/> Ver perfil</DropdownItem>
-                        <DropdownItem style={mystyle} onClick={props.handleLogout}><ImExit/> Cerrar Sesion</DropdownItem>
-                    </DropdownMenu>
-                </Dropdown>
-                
-                
-               
-                
-            </nav>
-            
-            
-           <Side/> 
-            <Music/>
-            <Crud/>
-            
-            
-            
-        </section> */}
+        
             <h1>Bienvenido</h1>
 
             <Side/> 
-            <Music/>
             <Crud/>
 
         </Router>
