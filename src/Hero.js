@@ -77,20 +77,6 @@ const Hero = (props) => {
 
           <h1 className="prueba">hola</h1>
 
-          {/* <Dropdown  isOpen={dropdown} toggle={abrirCerrarDropdown} style={{ position: 'relative', zIndex: '100' }} direction="left" >
-                     <DropdownToggle >
-                     <FaUserAlt/>
-                     </DropdownToggle>
-
-                     <DropdownMenu >
-                     <DropdownItem header style={mystyle}>Opciones</DropdownItem>
-                     <DropdownItem divider style={mystyle}></DropdownItem>
-                        <DropdownItem style={{visibility: showMe ? 'visible' : 'hidden' }}><NavLink exact activeClassName="active" to="/admin">Admin</NavLink></DropdownItem>
-                        <DropdownItem style={mystyle}><NavLink exact activeClassName="active" to="/user">User</NavLink></DropdownItem>
-                         <DropdownItem style={mystyle}><FaUserAlt/> Ver perfil</DropdownItem>
-                         <DropdownItem style={mystyle} onClick={props.handleLogout}><ImExit/> Cerrar Sesion</DropdownItem>
-                     </DropdownMenu>
-                 </Dropdown> */}
 
           <div className="containerdor">
           <a

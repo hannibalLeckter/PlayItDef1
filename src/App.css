@@ -134,6 +134,7 @@ button {
   align-items: center;
   justify-content: space-around;
   flex-wrap: nowrap;
+  position: fixed;
 }
 
 .hero nav h2 {
@@ -157,12 +158,10 @@ button {
   text-align: center;
   padding:  40px 0px;
   width: fit-content;
-  height: 100px;
+  height: 60px;
   width: 100%;
   margin: 0 0 0em;
-
-
- 
+  
 }
 
 h1 {
