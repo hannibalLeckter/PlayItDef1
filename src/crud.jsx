@@ -386,7 +386,7 @@ addCola(song){
             
         <div class="form__group field">
           <input class="form__field"  name="name" id='name' required type="text"  autoComplete="off" placeholder="Buscar..." onChange={event => this.setState({searchTerm:event.target.value})}/>
-          <label for="name" class="form__label">Buscar canciones...</label>
+          <label for="name" class="form__label">Buscar canciones por el nombre o el artista</label>
         </div>
 
         {/* <input type="text"  placeholder="Search..." onChange={event => this.setState({searchTerm:event.target.value})}/> */}
@@ -455,7 +455,7 @@ addCola(song){
             {data.filter((val)=>{
               if(searchTerm==""){
                 return val;
-              }else if(val.cancion.toLowerCase().includes(searchTerm.toLowerCase())){
+              }else if(val.cancion.toLowerCase().includes(searchTerm.toLowerCase()) || val.autor.toLowerCase().includes(searchTerm.toLowerCase())){
                 return val;
               }
             }).map((data,key) =>{
@@ -496,21 +496,7 @@ addCola(song){
                       />
                   </td>
 
-                   <td>
-                  
-                  {/* <div style={{visibility: this.state.showMe ? 'visible' : 'hidden' }} class="row justify-content-center">
-                   
-                    <p><FaEdit onClick={() =>
-                        this.seleccionarCanal(data, data.uid, "Editar")
-                      }/></p>
-                    {" "}
-                    {"   "}
-                    
-                    <p><FaTrashAlt onClick={() =>
-                        this.seleccionarCanal(data, data.uid, "Eliminar")
-                      }/></p>
-                    </div> */}
-                  
+                   <td>                 
                   </td> 
                 </tr>
   );
