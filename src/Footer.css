@@ -62,3 +62,7 @@
 .footer__songInfo > p {
   font-size: 12px;
 }
+
+.table {
+  margin-bottom: 20px;
+}
