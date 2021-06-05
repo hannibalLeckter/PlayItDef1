@@ -3,7 +3,7 @@ import React, { Component , useState } from "react";
 import fire from "./fire";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
-import { FaPlay,FaTrashAlt,FaEdit } from "react-icons/fa";
+import { FaPlay,FaTrashAlt,FaEdit,FaSearch } from "react-icons/fa";
 import { BsFillPersonFill } from "react-icons/bs";
 import HomeIcon from "@material-ui/icons/Home";
 import SearchIcon from "@material-ui/icons/Search";
@@ -386,7 +386,7 @@ addCola(song){
             
         <div class="form__group field">
           <input class="form__field"  name="name" id='name' required type="text"  autoComplete="off" placeholder="Buscar..." onChange={event => this.setState({searchTerm:event.target.value})}/>
-          <label for="name" class="form__label">Buscar canciones por el nombre o el artista</label>
+          <label for="name" class="form__label"><FaSearch/> Cancion o Artista</label>
         </div>
 
         {/* <input type="text"  placeholder="Search..." onChange={event => this.setState({searchTerm:event.target.value})}/> */}

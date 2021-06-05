@@ -8,10 +8,7 @@ import { MdSettings } from "react-icons/md";
 import { ImExit } from "react-icons/im";
 import "./hero.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  Carousel,
-  
-} from 'reactstrap';
+import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
 
 
 import {
@@ -32,6 +29,7 @@ import Sidebar from "./Sidebar";
 const Hero = (props) => {
 
   const [showMe, setShowMe] = useState(true);
+  const [modelPerfil,setModelPerfil]=useState(false);
  
 
   const CurrentUser = fire.auth().currentUser;
@@ -91,6 +89,7 @@ const Hero = (props) => {
             <a
               class="btn1 effect01"
               target="_blank"
+              onClick={() => setModelPerfil(true)}
             >
               <span>
                 <FaUserAlt style={{width:"35px", height:"35px"}}/>
@@ -109,6 +108,57 @@ const Hero = (props) => {
         {/* <Carousel/> */}
         <Component/>
         
+        <Modal isOpen={modelPerfil}>
+          <ModalHeader>Perfil de usuario</ModalHeader>
+          <ModalBody>
+          
+            <div className="form-group">
+              <label>Nombre de usuario: </label>
+              <br />
+              <input 
+                value={CurrentUser.displayName}
+                type="text"
+                className="form-control"
+                name="cancion"
+              />
+              <br />
+              <label>Email: </label>
+              <br />
+              <input
+                value={CurrentUser.email}
+                type="text"
+                className="form-control"
+                name="duracion"
+              />
+              <br />
+              <label>Foto: </label>
+              <br />
+              <input
+                value={CurrentUser.photoURL}
+                type="text"
+                className="form-control"
+                name="autor"
+              />
+              <br />
+              
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <button
+              className="btn btn-primary"
+              
+            >
+              Editar
+            </button>
+            {"   "}
+            <button
+              className="btn btn-danger"
+              onClick={() => this.setState({ modalEditar: false })}
+            >
+              Cancelar
+            </button>
+          </ModalFooter>
+        </Modal>
 
          
       </section>
