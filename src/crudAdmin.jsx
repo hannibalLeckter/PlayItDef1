@@ -378,16 +378,16 @@ addCola(song){
 
         {/* <input type="text"  placeholder="Search..." onChange={event => this.setState({searchTerm:event.target.value})}/> */}
 
-        <div className="col text-center d-flex justify-content-center" >
+        <div className="containerdor3" >
           <a 
-          className="btn btn-success w-25 center"
+          className="btn3 effect01"
           onClick={() => this.setState({ modalInsertar: true })}
         >
           <span>Insertar cancion</span>
         </a>
         {"   "}
         <a 
-          className="btn btn-success w-25 center"
+          className="btn3 effect01"
           onClick={() => this.setState({ modalCola: true })}
         >
           <span>Ver Cola</span>
