@@ -3,13 +3,20 @@ import fire from "./fire";
 import Music from "./Music";
 import Crud from "./crud";
 import Side from "./Sidebar";
-import { FaPlay, FaTrashAlt, FaEdit, FaUserAlt, FaLock,FaHome } from "react-icons/fa";
+import {
+  FaPlay,
+  FaTrashAlt,
+  FaEdit,
+  FaUserAlt,
+  FaLock,
+  FaHome,
+} from "react-icons/fa";
+import { ImCross } from "react-icons/im";
 import { MdSettings } from "react-icons/md";
 import { ImExit } from "react-icons/im";
 import "./hero.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
-
 
 import {
   BrowserRouter as Router,
@@ -25,37 +32,23 @@ import Login from "./Login";
 import Prueba from "./prueba";
 import Sidebar from "./Sidebar";
 
-
 const Hero = (props) => {
-
-  const [showMe, setShowMe] = useState(true);
-  const [modelPerfil,setModelPerfil]=useState(false);
- 
-
   const CurrentUser = fire.auth().currentUser;
 
-  const cutEmail = CurrentUser.email;
-  const res = cutEmail.split("");
-  console.log(res);
-  var res2 = " ";
+  const [showMe, setShowMe] = useState(true);
+  const [modelPerfil, setModelPerfil] = useState(false);
+  const [uploadValue, setUploadValue] = useState(0);
 
-  for (let i = 0; i < res.length; i++) {
-    if (res[i] != "@") {
-      res2 = res2 + res[i];
-    } else if (res[i] == "@") {
-      break;
-    }
-  }
-  console.log(res2);
-  CurrentUser.updateProfile({ displayName: res2 });
+  const [picture, setPicture] = useState(CurrentUser.photoURL);
+  const [nombreUsuario, setDisplayName] = useState(CurrentUser.displayName);
 
+  var profileImg = CurrentUser.photoURL;
   const showHide = () => {
-    
-    const CurrentUser = fire.auth().currentUser.email;
+    const CurrentUser1 = fire.auth().currentUser.email;
 
-    console.log(CurrentUser);
+    console.log(CurrentUser1);
 
-    if (CurrentUser == "admin@gmail.com") {
+    if (CurrentUser1 == "admin@gmail.com") {
       console.log("yes");
       setShowMe(true);
     } else {
@@ -64,26 +57,84 @@ const Hero = (props) => {
     }
   };
 
+  const handleUpload = (event) => {
+    const file = event.target.files[0];
+    console.log(file);
+    const storageRef = fire.storage().ref(`/fotos/${file.name}`);
+    const task = storageRef.put(file);
 
-  var Component = showMe  ? Admin : User;
+    task.on(
+      "state-changed",
+      (snapshot) => {
+        let percentage =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        // this.setState({
+        //     uploadValue:percentage
+        // })
+        setUploadValue(percentage);
+      },
+      (error) => {
+        console.log(error.message);
+      },
+      () => {
+        storageRef.getDownloadURL().then((url) => {
+          // this.setState({
+          //     uploadValue:100,
+          //     picture:url
+          // })
+          setUploadValue(100);
+          setPicture(url);
+          console.log(url);
+        });
+      }
+    );
+  };
+
+  // handleChangeName = (e) =>{
+
+  // }
+
+  const updateProfileUser = () => {
+    const update = {
+      displayName: nombreUsuario,
+      photoURL: picture,
+    };
+
+    console.log(nombreUsuario);
+
+    CurrentUser.updateProfile(update);
+    console.log(CurrentUser.displayName);
+    setModelPerfil(false);
+    window.location.reload(false);
+  };
+
+  var Component = showMe ? Admin : User;
 
   return (
     <Router>
       <section className="hero" onLoad={showHide}>
         <nav className="nav">
-          <h2>Bienvenido <b>{res2}</b></h2>
-
+          <img src={CurrentUser.photoURL} alt="" className="nav_img" />
+          <h2>
+            Bienvenido <b>{CurrentUser.displayName}</b>
+          </h2>
 
           <div className="containerdor">
-
-          <a
+            <a
               onClick={props.handleLogout}
               class="btn1 effect01"
               target="_blank"
-            ><NavLink exact activeClassName="active" to="/" style={{color:"white"}}>
-              <span>
-                <ImExit style={{width:"30px", height:"30px"}}/>
-              </span></NavLink>
+            >
+              <NavLink
+                exact
+                activeClassName="active"
+                to="/"
+                style={{ color: "white" }}
+              >
+                <span>
+                  <ImExit style={{ width: "30px", height: "30px" }} />
+                </span>
+              </NavLink>
             </a>
 
             <a
@@ -92,81 +143,88 @@ const Hero = (props) => {
               onClick={() => setModelPerfil(true)}
             >
               <span>
-                <FaUserAlt style={{width:"35px", height:"35px"}}/>
+                <FaUserAlt style={{ width: "35px", height: "35px" }} />
               </span>
             </a>
-
-            
-
-
           </div>
-        
         </nav>
 
-        
-        <Sidebar/>
+        <Sidebar />
         {/* <Carousel/> */}
-        <Component/>
-        
-        <Modal isOpen={modelPerfil}>
-          <ModalHeader>Perfil de usuario</ModalHeader>
+        <Component />
+
+        <Modal isOpen={modelPerfil} className="modal-lg">
+          <ModalHeader>Perfil de usuario </ModalHeader>
           <ModalBody>
-          
             <div className="form-group">
-              <label>Nombre de usuario: </label>
+              <div className="cont_img">
+                <div className="img_user">
+                  <p>Foto actual</p>
+                  <img
+                    className="input_img"
+                    src={
+                      profileImg == null
+                        ? "https://firebasestorage.googleapis.com/v0/b/playit-db.appspot.com/o/fotos%2Fno%20user.jpg?alt=media&token=80991683-7be7-42c3-abd2-bf3408cbed03"
+                        : CurrentUser.photoURL
+                    }
+                    alt=""
+                  />
+                  <br />
+                </div>
+
+                <div className="img_new">
+                <p>Nueva foto</p>
+                  <img className="input_img" src={picture} alt="" />
+                  
+                </div>
+
+              </div>
               <br />
-              <input 
-                value={CurrentUser.displayName}
+                  <progress value={uploadValue} max="100"></progress>
+                  <br />
+                  <input type="file" onChange={handleUpload} />
+                  <br />
+
+              <label className="input-name">Nombre de usuario: </label>
+              <br />
+              <input
+                placeholder={CurrentUser.displayName}
                 type="text"
                 className="form-control"
-                name="cancion"
+                onChange={(e) => setDisplayName(e.target.value)}
               />
               <br />
               <label>Email: </label>
               <br />
               <input
+                disabled
                 value={CurrentUser.email}
                 type="text"
                 className="form-control"
                 name="duracion"
               />
               <br />
-              <label>Foto: </label>
-              <br />
-              <input
-                value={CurrentUser.photoURL}
-                type="text"
-                className="form-control"
-                name="autor"
-              />
-              <br />
-              
             </div>
           </ModalBody>
           <ModalFooter>
-            <button
-              className="btn btn-primary"
-              
-            >
-              Editar
-            </button>
-            {"   "}
-            <button
-              className="btn btn-danger"
-              onClick={() => this.setState({ modalEditar: false })}
-            >
-              Cancelar
-            </button>
+            <div className="containerdor2">
+              <a className="btn2 effect01" onClick={updateProfileUser}>
+                <span><FaEdit/></span>
+              </a>
+              {"   "}
+              <a
+                className="btn2 effect01"
+                onClick={() => setModelPerfil(false)}
+              >
+                <span>
+                  <ImCross />
+                </span>
+              </a>
+            </div>
           </ModalFooter>
         </Modal>
-
-         
       </section>
     </Router>
-
-
-    
-
   );
 };
 

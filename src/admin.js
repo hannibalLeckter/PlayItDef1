@@ -17,34 +17,6 @@ import { BrowserRouter as Router,Route,Link,NavLink, Switch } from 'react-router
 
 const Admin = (props) =>{
 
-   const mystyle = {
-       padding: "10px",
-       fontFamily: "Arial",
-       width:"100%"
-     };
-
-   const [dropdown, setDropdown]= useState(false);
-   const abrirCerrarDropdown=()=>{
-       setDropdown(!dropdown);
-   }
-
-   const CurrentUser = fire.auth().currentUser;
-
-   const cutEmail = CurrentUser.email;
-   const res = cutEmail.split("");
-   console.log(res);
-   var res2=" ";
-
-   for (let i = 0; i < res.length; i++) {
-       if(res[i]!="@"){
-           res2=res2+res[i];
-       }else if(res[i]=="@"){
-           break;
-       }
-   }
-console.log(res2);
-   CurrentUser.updateProfile({displayName:res2})
-
     return(
         <Router>
         {/* <section className="hero">
