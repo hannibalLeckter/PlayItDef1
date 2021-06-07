@@ -115,7 +115,8 @@ const Hero = (props) => {
       <section className="hero" onLoad={showHide}>
         <nav className="nav">
           <img src={CurrentUser.photoURL} alt="" className="nav_img" />
-          <h2>
+
+          <h2 className="h2navbar">
             Bienvenido <b>{CurrentUser.displayName}</b>
           </h2>
 
