@@ -20,6 +20,7 @@ import RepeatIcon from "@material-ui/icons/Repeat";
 import VolumeDownIcon from "@material-ui/icons/VolumeDown";
 import PlaylistPlayIcon from "@material-ui/icons/PlaylistPlay";
 import "./Footer.css";
+import "./App.css";
 import { Grid, Slide, Slider } from "@material-ui/core";
 import { VolumeDown, VolumeMute, VolumeUp } from "@material-ui/icons";
 
@@ -377,20 +378,20 @@ addCola(song){
 
         {/* <input type="text"  placeholder="Search..." onChange={event => this.setState({searchTerm:event.target.value})}/> */}
 
-        <div className="col text-center" >
-          <button 
+        <div className="col text-center d-flex justify-content-center" >
+          <a 
           className="btn btn-success w-25 center"
           onClick={() => this.setState({ modalInsertar: true })}
         >
-          Insertar
-        </button>
-        
-        <button 
+          <span>Insertar cancion</span>
+        </a>
+        {"   "}
+        <a 
           className="btn btn-success w-25 center"
           onClick={() => this.setState({ modalCola: true })}
         >
-          Ver Cola
-        </button>
+          <span>Ver Cola</span>
+        </a>
         </div>
         <br />
         <br />
