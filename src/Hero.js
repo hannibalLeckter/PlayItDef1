@@ -8,6 +8,7 @@ import {
   FaTrashAlt,
   FaEdit,
   FaUserAlt,
+  FaUserEdit,
   FaLock,
   FaHome,
 } from "react-icons/fa";
@@ -133,8 +134,9 @@ const Hero = (props) => {
                     } alt="" className="nav_img" /> */}
 
           <h2 className="h2navbar">
-            Bienvenido <br/> <b>{CurrentUser.displayName}</b>
+            Bienvenido, <br/> <b>{CurrentUser.displayName}</b>
           </h2>
+
 
           <div className="containerdor">
             <a
@@ -160,7 +162,7 @@ const Hero = (props) => {
               onClick={() => setModelPerfil(true)}
             >
               <span>
-                <FaUserAlt style={{ width: "35px", height: "35px" }} />
+                <FaUserEdit style={{ width: "35px", height: "35px" }} />
               </span>
             </a>
           </div>
@@ -226,7 +228,7 @@ const Hero = (props) => {
           <ModalFooter>
             <div className="containerdor2">
               <a className="btn2 effect01" onClick={updateProfileUser}>
-                <span><FaEdit/></span>
+                <span><FaEdit style={{ width: "35px", height: "35px" }}/></span>
               </a>
               {"   "}
               <a
@@ -234,7 +236,7 @@ const Hero = (props) => {
                 onClick={() => setModelPerfil(false)}
               >
                 <span>
-                  <ImCross />
+                  <ImCross style={{ width: "35px", height: "35px" }} />
                 </span>
               </a>
             </div>
