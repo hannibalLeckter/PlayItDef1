@@ -114,10 +114,26 @@ const Hero = (props) => {
     <Router>
       <section className="hero" onLoad={showHide}>
         <nav className="nav">
-          <img src={CurrentUser.photoURL} alt="" className="nav_img" />
+
+        {profileImg == null ? (
+          <img
+            className="nav_img"
+            src="https://firebasestorage.googleapis.com/v0/b/playit-db.appspot.com/o/fotos%2Fno%20user.jpg?alt=media&token=97e4f992-708a-454a-9967-6c0e890a7865"
+          />
+          ) : (
+            <img
+            className="nav_img"
+            src={CurrentUser.photoURL}
+          />
+          )}
+          {/* <img src={
+                     
+                        ? "https://firebasestorage.googleapis.com/v0/b/playit-db.appspot.com/o/fotos%2Fno%20user.jpg?alt=media&token=80991683-7be7-42c3-abd2-bf3408cbed03"
+                        : CurrentUser.photoURL
+                    } alt="" className="nav_img" /> */}
 
           <h2 className="h2navbar">
-            Bienvenido <b>{CurrentUser.displayName}</b>
+            Bienvenido <br/> <b>{CurrentUser.displayName}</b>
           </h2>
 
           <div className="containerdor">
