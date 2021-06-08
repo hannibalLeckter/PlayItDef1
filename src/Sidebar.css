@@ -35,8 +35,13 @@
   transition: transform 0.2s ease-in-out;
   transform: scale(1.2) !important;
 }
-
 .crud {
-  
   margin-bottom: 75px;
+}
+.crudAdmin {
+  margin-bottom: 75px;
+}
+.table {
+  display: flex;
+  align-items: center;
 }
