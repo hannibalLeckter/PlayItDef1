@@ -396,8 +396,8 @@ addCola(song){
         <br />
         <br />
         
-    
-        <table className="table text-white w-100 d-flex justify-content-center ">
+    <div className="d-flex justify-content-center">
+        <table className="table text-white w-50 ">
           <tbody>
           <tr>
             <th className="col-1">#</th>
@@ -470,6 +470,7 @@ addCola(song){
             })}
           </tbody>
         </table>
+        </div>
 
         
 
